@@ -1,0 +1,16 @@
+/**
+ * config/database.ts — Singleton do Prisma Client
+ * Reutiliza a mesma instância em dev para evitar conexões extras (HMR)
+ */
+
+import { PrismaClient } from '@prisma/client'
+
+const globalForPrisma = globalThis as unknown as { prisma: PrismaClient }
+
+export const prisma =
+  globalForPrisma.prisma ||
+  new PrismaClient({
+    log: process.env.NODE_ENV === 'development' ? ['query', 'error', 'warn'] : ['error'],
+  })
+
+if (process.env.NODE_ENV !== 'production') globalForPrisma.prisma = prisma
