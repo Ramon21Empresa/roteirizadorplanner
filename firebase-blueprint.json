@@ -1,0 +1,63 @@
+{
+  "entities": {
+    "client": {
+      "title": "Client",
+      "description": "A customer to be visited in a route",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "description": "Unique code/ID" },
+        "name": { "type": "string", "description": "Client name" },
+        "address": { "type": "string", "description": "Full address" },
+        "lat": { "type": "number", "description": "Latitude" },
+        "lng": { "type": "number", "description": "Longitude" },
+        "sellerId": { "type": "string", "description": "ID of the assigned seller" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["id", "name", "address"]
+    },
+    "seller": {
+      "title": "Seller",
+      "description": "A salesperson who performs routes",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "description": "Unique code/ID" },
+        "name": { "type": "string", "description": "Seller name" },
+        "address": { "type": "string", "description": "Home/Base address" },
+        "lat": { "type": "number", "description": "Latitude" },
+        "lng": { "type": "number", "description": "Longitude" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["id", "name", "address"]
+    },
+    "simulation": {
+      "title": "Simulation",
+      "description": "A routing simulation for a seller",
+      "type": "object",
+      "properties": {
+        "name": { "type": "string", "description": "Simulation name" },
+        "sellerId": { "type": "string", "description": "ID of the seller" },
+        "week": { "type": "number", "description": "Week of the month (1-4)" },
+        "day": { "type": "string", "description": "Day of the week (Mon-Sat)" },
+        "route": { "type": "array", "description": "Ordered list of client IDs" },
+        "distance": { "type": "number", "description": "Total distance in km" },
+        "duration": { "type": "number", "description": "Total duration in minutes" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["name", "sellerId", "week", "day", "route"]
+    }
+  },
+  "firestore": {
+    "/clients/{clientId}": {
+      "schema": "client",
+      "description": "Collection of clients"
+    },
+    "/sellers/{sellerId}": {
+      "schema": "seller",
+      "description": "Collection of sellers"
+    },
+    "/simulations/{simulationId}": {
+      "schema": "simulation",
+      "description": "Collection of saved simulations"
+    }
+  }
+}
